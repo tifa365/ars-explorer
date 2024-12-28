@@ -1,9 +1,6 @@
-import './assets/styles.css'
-
-// The <template> tag defines the HTML structure of the Vue component.
+// The template tag defines the HTML structure of the Vue component.
 // It contains the markup that will be rendered in the browser when the component is used.
 // This structure allows for the creation of dynamic and reactive user interfaces using Vue's reactivity system.
-
 // The main container for the application is a div with the id "app".
 <template>
   <div id="app">
