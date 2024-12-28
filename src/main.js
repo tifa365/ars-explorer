@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
+import './assets/styles.css'
 
 // Bulma CSS is a modern CSS framework based on Flexbox. 
 // Import Bulma CSS
