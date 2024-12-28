@@ -1,3 +1,7 @@
+# GeoJSON
+
+/public/geojson/
+
 # Logs
 logs
 *.log
