@@ -71,33 +71,37 @@ export default {
     },
     
     handleSearch(query) {
-      this.searchQuery = query; // Update the search query
-      this.offset = 0; // Reset offset when new search is performed
+      this.searchQuery = query;
+      this.offset = 0;
       
-      const queryLower = query.toLowerCase().trim(); // Normalize the query for case-insensitive search
+      const queryLower = query.toLowerCase().trim();
       
       if (queryLower.length === 0) {
-        this.filteredResults = []; // Clear results if the query is empty
-        return; // Exit the method early
+        this.filteredResults = [];
+        return;
       }
 
-      this.filteredResults = Object.keys(this.arsMap)
-        .filter(key => 
-          key.indexOf(queryLower) === 0 || 
-          this.arsMap[key].toLowerCase().indexOf(queryLower) !== -1 
-        )
-        .map(ars => ({
-          ars, // ARS code
-          name: this.arsMap[ars], // Corresponding area name
-        }))
-        .sort((a, b) => a.ars.length - b.ars.length); // Sort results by ARS code length
+      // Only search if query is at least 2 characters
+      if (queryLower.length < 2) {
+        return;
+      }
 
-      window.location.hash = query; // Update URL hash to reflect the current search query
-      
-      if (this.filteredResults.length >= 1 && this.filteredResults[0].ars === queryLower) {
-        this.showShape(this.filteredResults[0].ars); // Show the shape for the first result
+      // Use more efficient filtering
+      this.filteredResults = Object.entries(this.arsMap)
+        .filter(([ars, name]) => {
+          const nameMatch = name.toLowerCase().includes(queryLower);
+          const arsMatch = ars.startsWith(queryLower);
+          return nameMatch || arsMatch;
+        })
+        .map(([ars, name]) => ({ ars, name }))
+        .slice(0, this.PAGE_SIZE); // Limit initial results
+
+      // Only update URL and shape if we have an exact match
+      if (this.filteredResults.length > 0 && this.filteredResults[0].ars === queryLower) {
+        window.location.hash = query;
+        this.showShape(this.filteredResults[0].ars);
       } else if (this.layer) {
-        this.layer.remove(); // Remove the previous layer if no match is found
+        this.layer.remove();
       }
     },
 
