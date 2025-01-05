@@ -55,6 +55,9 @@ export default {
     }).addTo(this.map); // Add the tile layer to the map
 
     this.loadARSData(); // Load the ARS data from a JSON file
+    
+    // Debounce the search function to avoid multiple requests
+    this.debouncedSearch = this.debounce(this.handleSearch, 150);
   },
 
   methods: {
@@ -68,6 +71,18 @@ export default {
       } catch (error) {
         console.error("Failed to load ARS data:", error); // Log any errors that occur
       }
+    },
+
+    debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
     },
     
     handleSearch(query) {
