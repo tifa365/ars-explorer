@@ -122,23 +122,25 @@ export default {
 
     async showShape(ars) {
       try {
-        const response = await fetch(`geojson/${ars}.geojson.json`); // Fetch the GeoJSON data for the ARS
-        const geojson = await response.json(); // Parse the GeoJSON data
-        
         if (this.layer) {
-          this.layer.remove(); // Remove the previous layer if it exists
+          this.layer.remove();
         }
 
+        const response = await fetch(`geojson/${ars}.geojson.json`);
+        const geojson = await response.json();
+        
         this.layer = L.geoJSON(geojson.features, {
-          style: this.shapeStyle // Apply the defined shape style
+          style: this.shapeStyle
         }).addTo(this.map);
 
+        // Optimize the zoom animation
         this.map.flyToBounds(this.layer.getBounds(), {
-          animate: true, // Enable animation
-          maxZoom: 11.5 // Set maximum zoom level
+          duration: 1, // Duration of the animation in seconds
+          easeLinearity: 0.5,  // More linear movement
+          padding: [50, 50]  // Add some padding around the shape
         });
       } catch (error) {
-        console.error('Failed to load shape:', error); // Log any errors that occur
+        console.error('Failed to load shape:', error);
       }
     },
 
