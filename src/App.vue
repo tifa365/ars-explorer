@@ -55,7 +55,7 @@ export default {
     }).addTo(this.map); // Add the tile layer to the map
 
     this.loadARSData(); // Load the ARS data from a JSON file
-    
+
     // Debounce the search function to avoid multiple requests
     this.debouncedSearch = this.debounce(this.handleSearch, 150);
   },
@@ -97,7 +97,7 @@ export default {
       }
 
       // Only search if query is at least 2 characters
-      if (queryLower.length < 2) {
+      if (queryLower.length < 3) {
         return;
       }
 
