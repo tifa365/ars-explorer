@@ -130,7 +130,28 @@ export default {
         const geojson = await response.json();
         
         this.layer = L.geoJSON(geojson.features, {
-          style: this.shapeStyle
+          style: this.shapeStyle,
+
+          onEachFeature: (feature, layer) => {
+          // Calculate bounding box from feature
+          const bounds = layer.getBounds();
+          const bbox = [
+            bounds.getWest(),  // min longitude
+            bounds.getSouth(), // min latitude
+            bounds.getEast(),  // max longitude
+            bounds.getNorth()  // max latitude
+          ];
+          
+          const govDataUrl = `https://www.govdata.de/suche?boundingbox=${bbox.join(',')}`;
+          const popupContent = `
+            <strong>${this.arsMap[ars]}</strong><br><br>
+            ARS: ${ars}<br>
+            <a href="${govDataUrl}" target="_blank">
+              GovData-Datensätze für diese Region
+            </a>
+          `;
+          layer.bindPopup(popupContent);
+        }
         }).addTo(this.map);
 
         // Optimize the zoom animation
