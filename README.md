@@ -66,7 +66,7 @@ npm run lint
 
 ## License
 
-Licensed under Creative Commons Zero (CC0), though I'd be happy to hear how you're using it.
+Licensed under Creative Commons Zero (CC0), excluding all administrative boundaries by GeoBasis-DE/BKG 2023 (see Data Sources). I'd be happy to hear how you're using it, though.
 
 ## Attribution
 
