@@ -81,3 +81,13 @@ section.load-more {
 .result:hover {
   border: 1px solid #dadada; /* Changes border color on hover */
 }
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: #090a0c;
+  color: #ffffff;
+}
+
+.leaflet-popup-content-wrapper strong:first-of-type {
+  font-weight: bolder;
+  font-size: 1.3em;  
+}
