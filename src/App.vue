@@ -14,7 +14,7 @@
       />
       <div class="results">
         <div v-for="result in filteredResults" :key="result.ars" class="container result">
-          <img src="@/assets/shape-berlin.svg" alt="Region icon">
+          <!-- Can be added back in when we have shapes for all ARS <img src="@/assets/shape-berlin.svg" alt="Region icon"> -->
           <p @click="handleResultClick(result.ars)">
             <strong>{{ result.name }}</strong> | {{ result.ars }}
           </p>
@@ -169,6 +169,7 @@ export default {
       this.searchQuery = ars; // Update the search query with the clicked ARS
       window.location.hash = ars; // Update the URL hash
       this.showShape(ars); // Show the shape for the clicked ARS
+      this.filteredResults = []; // Clear the search results
     },
   },
 };
